@@ -1,0 +1,28 @@
+{
+  "name": "choropleth-map",
+  "version": "1.0.0",
+  "description": "My attempt to fulfill the D3 fourth challenge.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImADrafter/choropleth-map.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ImADrafter/choropleth-map/issues"
+  },
+  "homepage": "https://github.com/ImADrafter/choropleth-map#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "d3": "^5.9.2"
+  }
+}
