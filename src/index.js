@@ -76,6 +76,15 @@ legendText = svg
 
 // Define a tooltip
 
+console.log(event);
+
+const tooltip = d3
+  .select("body")
+  .append("div")
+  .attr("id", "tooltip")
+  .attr("position", "absolute")
+  .style("display", "none");
+
 // Urls for maps
 const USAMAP =
   "https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/counties.json";
@@ -90,7 +99,7 @@ const promise2 = d3.json(USAMAP).then(data => data);
 Promise.all([promise1, promise2]).then(data => {
   const map = data[1];
   const educData = data[0];
-  const thisState = d => educData.filter(county => county.fips == d.id)[0];
+  const thisCounty = d => educData.filter(county => county.fips == d.id)[0];
 
   svg
     .append("g")
@@ -101,15 +110,18 @@ Promise.all([promise1, promise2]).then(data => {
     .attr("d", path)
     .attr("class", "county")
     .attr("transform", "translate(0, 50)")
-    .attr("data-fips", county => thisState(county).fips)
-    .attr("data-education", county => thisState(county).bachelorsOrHigher)
-    .attr("fill", d => colorScale(thisState(d).bachelorsOrHigher))
+    .attr("data-fips", county => thisCounty(county).fips)
+    .attr("data-education", county => thisCounty(county).bachelorsOrHigher)
+    .attr("fill", d => colorScale(thisCounty(d).bachelorsOrHigher))
     .on("mouseover", (d, i) => {
-      console.log(d);
+      const selectedState = thisCounty(d);
+      tooltip
+        .style("display", "block")
+        .text(selectedState.area_name)
+        .attr("x", 50)
+        .attr("y", 50);
+    })
+    .on("mouseout", (d, i) => {
+      tooltip.style("display", "none");
     });
-
-  // .on("mouseover", function(d) {
-  //     d3.select(this).style("fill", d3.select(this).attr('stroke'))
-  //         .attr('fill-opacity', 0.3);
-  //   })
 });
