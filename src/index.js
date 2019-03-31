@@ -76,13 +76,11 @@ legendText = svg
 
 // Define a tooltip
 
-console.log(event);
-
 const tooltip = d3
   .select("body")
   .append("div")
   .attr("id", "tooltip")
-  .attr("position", "absolute")
+  .style("position", "absolute")
   .style("display", "none");
 
 // Urls for maps
@@ -115,13 +113,23 @@ Promise.all([promise1, promise2]).then(data => {
     .attr("fill", d => colorScale(thisCounty(d).bachelorsOrHigher))
     .on("mouseover", (d, i) => {
       const selectedState = thisCounty(d);
+      var mouse = d3.mouse(d3.event.currentTarget);
       tooltip
+        .attr("data-education", selectedState.bachelorsOrHigher)
         .style("display", "block")
-        .text(selectedState.area_name)
-        .attr("x", 50)
-        .attr("y", 50);
+        .style("top", mouse[1] - 15 + "px")
+        .style("left", mouse[0] + "px")
+        .style("background-color", "rgba(255,255,255,0.7)")
+        .style("padding", "10px")
+        .style("border-radius", "5px")
+        .append("text")
+        .text(`County: ${selectedState.area_name}`)
+        .style("display", "block")
+        .append("text")
+        .text(`Bachelors or Higher: ${selectedState.bachelorsOrHigher}`)
+        .style("display", "block");
     })
     .on("mouseout", (d, i) => {
-      tooltip.style("display", "none");
+      tooltip.style("display", "none").text("");
     });
 });
