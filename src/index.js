@@ -30,21 +30,51 @@ svg
 
 // Define projection
 const projection = d3.geoAlbers();
-const scale = scaleFactor => {
-  return d3.geoTransform({
-    point: function(x, y) {
-      this.stream.point(x * scaleFactor, y * scaleFactor);
-    }
-  });
-};
-const path = d3.geoPath().projection(scale(0.8));
+// const scale = scaleFactor => {
+//   return d3.geoTransform({
+//     point: function(x, y) {
+//       this.stream.point(x * scaleFactor, y * scaleFactor);
+//     }
+//   });
+// };
+const path = d3.geoPath(); //.projection(scale(0.9));
 
-// Define x axis and scale
+// Define color scale
 
-// const x = d3
-//   .scaleLinear()
-//   .domain([2.6, 75.1])
-//   .rangeRound([600, 860]);
+const colorScale = d3.scaleOrdinal(d3.schemePurples[4]);
+
+// Define the legend
+
+const legendData = [1, 2, 3, 4];
+const legendConf = { width: 50, y: 70 };
+
+const legend = svg
+  .append("g")
+  .attr("id", "legend")
+  .selectAll("rect")
+  .data(legendData)
+  .enter()
+  .append("rect")
+  .attr("fill", d => colorScale(d))
+  .attr("width", legendConf.width)
+  .attr("height", 30)
+  .attr("y", legendConf.y)
+  .attr("x", d => d * legendConf.width + 600)
+  .attr("stroke", "Corn")
+  .attr("stroke-width", 1);
+
+legendText = svg
+  .append("g")
+  .selectAll("text")
+  .data(legendData)
+  .enter()
+  .append("text")
+  .attr("y", legendConf.y + 20)
+  .attr("x", d => d * legendConf.width + 600 + 20)
+  .attr("font-size", "20px")
+  .text(d => d);
+
+// Define a tooltip
 
 // Urls for maps
 const USAMAP =
@@ -59,6 +89,8 @@ const promise2 = d3.json(USAMAP).then(data => data);
 
 Promise.all([promise1, promise2]).then(data => {
   const map = data[1];
+  const educData = data[0];
+  const thisState = d => educData.filter(county => county.fips == d.id)[0];
 
   svg
     .append("g")
@@ -67,10 +99,14 @@ Promise.all([promise1, promise2]).then(data => {
     .enter()
     .append("path")
     .attr("d", path)
-    .attr("transform", "translate(0, 50)");
-  // .on("mouseover", d => {
-  //   console.log(d);
-  // });
+    .attr("class", "county")
+    .attr("transform", "translate(0, 50)")
+    .attr("data-fips", county => thisState(county).fips)
+    .attr("data-education", county => thisState(county).bachelorsOrHigher)
+    .attr("fill", d => colorScale(thisState(d).bachelorsOrHigher))
+    .on("mouseover", (d, i) => {
+      console.log(d);
+    });
 
   // .on("mouseover", function(d) {
   //     d3.select(this).style("fill", d3.select(this).attr('stroke'))
