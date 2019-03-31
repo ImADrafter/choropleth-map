@@ -8,3 +8,5 @@ Resources:
 
 - US Education Data: https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/for_user_education.json
 - US County Data: https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/counties.json
+
+You can see the project build on [gitHubPages](https://imadrafter.github.io/choropleth-map/).
