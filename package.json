@@ -17,12 +17,12 @@
   },
   "homepage": "https://github.com/ImADrafter/choropleth-map#readme",
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint": "6.1.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.18.2"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "d3": "^5.9.2"
+    "axios": "0.19.0",
+    "d3": "5.9.7"
   }
 }
