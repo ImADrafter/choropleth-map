@@ -4,6 +4,7 @@
   "description": "My attempt to fulfill the D3 fourth challenge.",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint --fix src/**/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
