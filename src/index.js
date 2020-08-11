@@ -1,5 +1,8 @@
+import * as d3 from 'd3';
+import * as topojson from 'topojson';
+
 const config = {
-  width: 1000, //screen.width
+  width: 1000,
   height: 600
 };
 
@@ -31,7 +34,7 @@ svg
 // Define projection
 const projection = d3.geoAlbers();
 
-const path = d3.geoPath(); //.projection(scale(0.9));
+const path = d3.geoPath();
 
 // Define color scale
 const colorScale = d3.scaleOrdinal(d3.schemePurples[4]);
@@ -55,7 +58,7 @@ const legend = svg
   .attr('stroke', 'Corn')
   .attr('stroke-width', 1);
 
-legendText = svg
+const legendText = svg
   .append('g')
   .selectAll('text')
   .data(legendData)
