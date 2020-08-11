@@ -1,0 +1,30 @@
+name: Build and publish pages
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install
+      run: npm ci
+
+    - name: Lint
+      run: npm run lint
+
+    - name: Build script
+      run: npm run build
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: publish distribution artifact
+        path: dist/main.js
